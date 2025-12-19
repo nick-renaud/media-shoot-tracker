@@ -2,29 +2,19 @@
 
 This app uses [Resend](https://resend.com) to send shoot summary emails.
 
-## Setup Steps
+## Quick Setup (5 minutes)
 
 ### 1. Create a Resend Account
 1. Go to [resend.com](https://resend.com)
 2. Sign up for a free account (100 emails/day free)
 
-### 2. Verify Your Domain (Optional but Recommended)
-1. In Resend dashboard, go to **Domains**
-2. Add `323media.io` domain
-3. Add the DNS records they provide to your domain registrar
-4. Wait for verification (usually a few minutes)
-
-**OR** use Resend's test domain for now:
-- From: `onboarding@resend.dev`
-- This works immediately but emails may go to spam
-
-### 3. Get Your API Key
+### 2. Get Your API Key
 1. In Resend dashboard, go to **API Keys**
 2. Click **Create API Key**
 3. Name it "Media Shoot Tracker"
 4. Copy the API key (starts with `re_`)
 
-### 4. Add API Key to Your App
+### 3. Add API Key to Your App
 1. Create a file named `.env.local` in the project root
 2. Add this line:
    ```
@@ -33,17 +23,20 @@ This app uses [Resend](https://resend.com) to send shoot summary emails.
 3. Save the file
 4. Restart your dev server (`npm run dev`)
 
-### 5. Update the "From" Email (if using custom domain)
-If you verified `323media.io`, update the API route:
+**That's it!** The app is configured to use Resend's test domain (`onboarding@resend.dev`) which works immediately.
 
-File: `app/api/send-summary/route.ts`
+## Optional: Verify Your Domain (Recommended for Production)
 
-Change:
-```typescript
-from: 'Media Shoot Tracker <shoots@323media.io>',
-```
+To avoid emails going to spam, verify `323media.io`:
 
-To use your verified domain email.
+1. In Resend dashboard, go to **Domains**
+2. Add `323media.io` domain
+3. Add the DNS records they provide to your domain registrar
+4. Wait for verification (usually a few minutes)
+5. Update `app/api/send-summary/route.ts`:
+   ```typescript
+   from: 'Media Shoot Tracker <shoots@323media.io>',
+   ```
 
 ## Testing
 

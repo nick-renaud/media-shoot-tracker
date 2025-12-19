@@ -40,6 +40,15 @@ ${shoot.rooms.filter((r: any) => !r.skipped).map((r: any) =>
 Sent from Media Shoot Tracker
     `.trim();
 
+    // Check if API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY not configured');
+      return NextResponse.json(
+        { error: 'Email service not configured. Please add RESEND_API_KEY to .env.local' },
+        { status: 500 }
+      );
+    }
+
     // Send email using Resend
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -48,7 +57,7 @@ Sent from Media Shoot Tracker
         'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Media Shoot Tracker <shoots@323media.io>',
+        from: 'Media Shoot Tracker <onboarding@resend.dev>',
         to: ['nick@323media.io'],
         subject: `Shoot Complete: ${shoot.tierDisplayName}${shoot.address ? ` - ${shoot.address}` : ''}`,
         text: emailContent,
