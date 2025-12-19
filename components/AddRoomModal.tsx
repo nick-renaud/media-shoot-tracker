@@ -1,120 +1,115 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { QUICK_ADD_ROOMS } from '@/lib/data/quick-add-rooms';
-import { RoomCategory, Orientation, ShootRoom } from '@/types';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 
 interface AddRoomModalProps {
-  onAddRoom: (room: Partial<ShootRoom>) => void;
+  onAddRoom: (name: string, expectedShots: number) => void;
 }
 
 export function AddRoomModal({ onAddRoom }: AddRoomModalProps) {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [customName, setCustomName] = useState('');
-  const [customShots, setCustomShots] = useState(1);
+  const [customShots, setCustomShots] = useState('');
 
-  const handleQuickAdd = (
-    name: string,
-    category: RoomCategory,
-    orientation: Orientation,
-    shots: number
-  ) => {
-    onAddRoom({
-      name,
-      category,
-      orientation,
-      expectedShots: shots,
-    });
-    setOpen(false);
+  const handleQuickAdd = (name: string, shots: number) => {
+    onAddRoom(name, shots);
+    setIsOpen(false);
   };
 
   const handleCustomAdd = () => {
-    if (!customName.trim()) return;
-
-    onAddRoom({
-      name: customName,
-      category: 'misc',
-      orientation: 'H',
-      expectedShots: customShots,
-    });
-
-    setCustomName('');
-    setCustomShots(1);
-    setOpen(false);
+    const shots = parseInt(customShots);
+    if (customName.trim() && !isNaN(shots) && shots > 0) {
+      onAddRoom(customName, shots);
+      setCustomName('');
+      setCustomShots('');
+      setIsOpen(false);
+    }
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" className="w-full">
-          + ADD ROOM
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add Room</DialogTitle>
-        </DialogHeader>
+    <>
+      <Button
+        onClick={() => setIsOpen(true)}
+        variant="outline"
+        className="w-full border-dashed border-slate-300 hover:border-indigo-400 hover:bg-indigo-50"
+      >
+        <PlusCircleIcon className="mr-2 h-5 w-5" />
+        Add Room
+      </Button>
 
-        <div className="space-y-4">
-          <div>
-            <h3 className="mb-2 font-semibold">Quick Add</h3>
-            <div className="grid grid-cols-2 gap-2">
-              {QUICK_ADD_ROOMS.map((room, idx) => (
-                <Button
-                  key={idx}
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    handleQuickAdd(
-                      room.name,
-                      room.category,
-                      room.orientation,
-                      room.defaultShots
-                    )
-                  }
-                  className="justify-start text-left"
-                >
-                  {room.name}
-                </Button>
-              ))}
-            </div>
-          </div>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
+            <h2 className="text-2xl font-bold text-slate-900">Add Room</h2>
+            <p className="mt-2 text-sm text-slate-600">
+              Quick-add a common room or create a custom entry
+            </p>
 
-          <div className="border-t pt-4">
-            <h3 className="mb-2 font-semibold">Custom Room</h3>
-            <div className="space-y-3">
-              <Input
-                placeholder="Room name"
-                value={customName}
-                onChange={(e) => setCustomName(e.target.value)}
-              />
-              <div className="flex items-center gap-2">
-                <label className="text-sm">Expected shots:</label>
-                <Input
-                  type="number"
-                  min="1"
-                  value={customShots}
-                  onChange={(e) => setCustomShots(parseInt(e.target.value) || 1)}
-                  className="w-20"
-                />
+            <div className="mt-6 space-y-6">
+              {/* Quick add */}
+              <div>
+                <h3 className="text-sm font-semibold text-slate-700">
+                  Quick Add
+                </h3>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  {QUICK_ADD_ROOMS.map((room) => (
+                    <button
+                      key={room.id}
+                      onClick={() =>
+                        handleQuickAdd(room.name, room.defaultShots)
+                      }
+                      className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-900 transition-all hover:border-indigo-300 hover:bg-indigo-50"
+                    >
+                      <div>{room.name}</div>
+                      <div className="text-xs text-slate-500">
+                        {room.defaultShots} shots
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
-              <Button onClick={handleCustomAdd} className="w-full">
+
+              {/* Custom */}
+              <div>
+                <h3 className="text-sm font-semibold text-slate-700">
+                  Custom Room
+                </h3>
+                <div className="mt-3 space-y-3">
+                  <Input
+                    placeholder="Room name"
+                    value={customName}
+                    onChange={(e) => setCustomName(e.target.value)}
+                  />
+                  <Input
+                    type="number"
+                    placeholder="Expected shots"
+                    value={customShots}
+                    onChange={(e) => setCustomShots(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleCustomAdd} className="flex-1">
                 Add Custom Room
               </Button>
             </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      )}
+    </>
   );
 }
-

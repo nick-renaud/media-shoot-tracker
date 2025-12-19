@@ -1,22 +1,24 @@
+'use client';
+
 import { RoomCategory as RoomCategoryType, ShootRoom } from '@/types';
 import { RoomCard } from './RoomCard';
 
 interface RoomCategoryProps {
   category: RoomCategoryType;
   rooms: ShootRoom[];
-  onUpdateActualShots: (roomId: string, actual: number) => void;
+  onUpdateActualShots: (roomId: string, actualShots: number) => void;
   onToggleComplete: (roomId: string) => void;
   onToggleSkip: (roomId: string) => void;
   onUpdateNotes: (roomId: string, notes: string) => void;
 }
 
 const CATEGORY_LABELS: Record<RoomCategoryType, string> = {
-  exteriors: 'EXTERIORS',
-  main_living: 'MAIN LIVING AREA',
-  kitchen_dining: 'KITCHEN, DINING',
-  beds_baths: 'BEDS, BATHS',
-  misc: 'MISC',
-  twilights: 'TWILIGHTS',
+  exteriors: 'Exteriors',
+  main_living: 'Main Living Area',
+  kitchen_dining: 'Kitchen & Dining',
+  beds_baths: 'Bedrooms & Bathrooms',
+  misc: 'Miscellaneous',
+  twilights: 'Twilight Shots',
 };
 
 export function RoomCategory({
@@ -31,10 +33,10 @@ export function RoomCategory({
 
   return (
     <div className="space-y-3">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+      <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
         {CATEGORY_LABELS[category]}
       </h2>
-      <div className="space-y-2">
+      <div className="space-y-3">
         {rooms.map((room) => (
           <RoomCard
             key={room.id}
@@ -49,4 +51,3 @@ export function RoomCategory({
     </div>
   );
 }
-

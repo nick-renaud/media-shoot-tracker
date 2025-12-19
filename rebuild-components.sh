@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# Create professional RoomCard component
+cat > components/RoomCard.tsx << 'EOF'
 'use client';
 
 import { ShootRoom } from '@/types';
@@ -156,3 +160,6 @@ export function RoomCard({
     </div>
   );
 }
+EOF
+
+chmod +x rebuild-components.sh
