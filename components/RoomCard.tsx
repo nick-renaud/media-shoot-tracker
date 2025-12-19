@@ -42,28 +42,28 @@ export function RoomCard({
         <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-emerald-500 to-emerald-600" />
       )}
 
-      <div className="p-6">
-        <div className="flex items-start gap-5">
+      <div className="p-4 sm:p-6">
+        <div className="flex items-start gap-3 sm:gap-5">
           <button
             onClick={onToggleComplete}
             disabled={room.skipped}
             className="mt-1 flex-shrink-0 transition-transform hover:scale-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {room.completed ? (
-              <CheckCircleSolid className="h-10 w-10 text-emerald-500" />
+              <CheckCircleSolid className="h-8 w-8 sm:h-10 sm:w-10 text-emerald-500" />
             ) : room.skipped ? (
-              <MinusCircleIcon className="h-10 w-10 text-slate-400" />
+              <MinusCircleIcon className="h-8 w-8 sm:h-10 sm:w-10 text-slate-400" />
             ) : (
-              <div className="h-10 w-10 rounded-full border-3 border-slate-300 transition-all group-hover:border-slate-400 group-hover:shadow-sm" />
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-3 border-slate-300 transition-all group-hover:border-slate-400 group-hover:shadow-sm" />
             )}
           </button>
 
-          <div className="flex-1 space-y-4">
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-3">
+          <div className="flex-1 min-w-0 space-y-3 sm:space-y-4">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                   <h3
-                    className={`text-lg font-bold leading-tight ${
+                    className={`text-base sm:text-lg font-bold leading-tight ${
                       room.completed
                         ? 'text-emerald-900'
                         : room.skipped
@@ -77,47 +77,47 @@ export function RoomCard({
                 </div>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex gap-1 sm:gap-2 flex-shrink-0">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     setShowNotes(!showNotes);
                   }}
                   disabled={room.skipped}
-                  className={`rounded-xl p-3 transition-all ${
+                  className={`rounded-lg sm:rounded-xl p-2 sm:p-3 transition-all ${
                     showNotes
                       ? 'bg-indigo-100 text-indigo-700'
                       : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'
                   } disabled:cursor-not-allowed disabled:opacity-50`}
                   title="Add notes"
                 >
-                  <ChatBubbleLeftIcon className="h-5 w-5" />
+                  <ChatBubbleLeftIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onToggleSkip();
                   }}
-                  className="rounded-xl p-3 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-700"
+                  className="rounded-lg sm:rounded-xl p-2 sm:p-3 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-700"
                   title={room.skipped ? 'Unskip room' : 'Skip room'}
                 >
-                  <MinusCircleIcon className="h-5 w-5" />
+                  <MinusCircleIcon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-6">
-              <div className="flex items-center gap-3">
-                <div className="rounded-xl bg-slate-100 p-2.5">
-                  <CameraIcon className="h-6 w-6 text-slate-600" />
+            <div className="flex items-center justify-between gap-3 sm:gap-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="rounded-lg sm:rounded-xl bg-slate-100 p-2 sm:p-2.5">
+                  <CameraIcon className="h-5 w-5 sm:h-6 sm:w-6 text-slate-600" />
                 </div>
                 <div>
                   <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Expected</div>
-                  <div className="text-2xl font-bold text-slate-900">{room.expectedShots}</div>
+                  <div className="text-xl sm:text-2xl font-bold text-slate-900">{room.expectedShots}</div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -125,14 +125,14 @@ export function RoomCard({
                     if (current > 0) onUpdateActualShots(current - 1);
                   }}
                   disabled={room.skipped || (room.actualShots ?? 0) === 0}
-                  className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-all hover:bg-slate-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg sm:rounded-xl bg-slate-100 text-slate-700 transition-all hover:bg-slate-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  <span className="text-2xl font-bold">−</span>
+                  <span className="text-xl sm:text-2xl font-bold">−</span>
                 </button>
 
-                <div className="flex min-w-[80px] flex-col items-center">
+                <div className="flex min-w-[60px] sm:min-w-[80px] flex-col items-center">
                   <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Actual</div>
-                  <div className="text-3xl font-bold text-indigo-600">{room.actualShots ?? 0}</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-indigo-600">{room.actualShots ?? 0}</div>
                 </div>
 
                 <button
@@ -142,9 +142,9 @@ export function RoomCard({
                     onUpdateActualShots(current + 1);
                   }}
                   disabled={room.skipped}
-                  className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 text-white transition-all hover:bg-indigo-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg sm:rounded-xl bg-indigo-600 text-white transition-all hover:bg-indigo-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  <span className="text-2xl font-bold">+</span>
+                  <span className="text-xl sm:text-2xl font-bold">+</span>
                 </button>
               </div>
             </div>
