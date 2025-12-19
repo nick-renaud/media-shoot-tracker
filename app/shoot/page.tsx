@@ -72,23 +72,25 @@ export default function ShootPage() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6 p-4 pb-24">
-      <div className="sticky top-0 z-10 bg-background pb-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold">{shoot.tierDisplayName}</h1>
-            <p className="text-sm text-muted-foreground">
-              👤 {shoot.photographer}
-            </p>
+    <div className="mx-auto max-w-3xl space-y-8 p-6 pb-32">
+      <div className="sticky top-0 z-10 -mx-6 bg-gradient-to-b from-white via-white to-transparent px-6 pb-6 pt-4">
+        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 shadow-lg">
+              <span className="text-2xl font-bold text-white">{shoot.tierDisplayName.split(' ')[0]}</span>
+            </div>
+            <div className="flex-1">
+              <h1 className="text-2xl font-bold text-slate-900">{shoot.photographer}</h1>
+              <p className="text-base font-medium text-slate-500">{shoot.tierDisplayName}</p>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-3">
           <Input
-            placeholder="📍 Property address (optional)"
+            placeholder="Property address (optional)"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             onBlur={() => address && updateAddress(address)}
+            className="h-12 border-slate-300 text-base"
           />
         </div>
       </div>
