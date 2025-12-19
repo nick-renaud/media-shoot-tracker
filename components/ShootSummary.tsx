@@ -42,7 +42,9 @@ export function ShootSummary({
         setEmailSent(true);
         setTimeout(() => setEmailSent(false), 3000);
       } else {
-        alert('Failed to send email. Please try again.');
+        const errorData = await response.json();
+        console.error('Email error:', errorData);
+        alert(errorData.error || 'Failed to send email. Please try again.');
       }
     } catch (error) {
       console.error('Error sending email:', error);

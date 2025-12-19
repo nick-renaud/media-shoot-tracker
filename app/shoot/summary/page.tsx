@@ -4,13 +4,20 @@ import { useRouter } from 'next/navigation';
 import { useShoot } from '@/lib/hooks/useShoot';
 import { ShootSummary } from '@/components/ShootSummary';
 import { calculateTotals } from '@/lib/utils/calculate-totals';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function SummaryPage() {
   const router = useRouter();
   const { shoot, clearShoot } = useShoot();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     if (!shoot) {
       router.push('/');
       return;
@@ -20,9 +27,9 @@ export default function SummaryPage() {
       router.push('/shoot');
       return;
     }
-  }, [shoot, router]);
+  }, [shoot, router, isClient]);
 
-  if (!shoot) {
+  if (!isClient || !shoot) {
     return null;
   }
 
