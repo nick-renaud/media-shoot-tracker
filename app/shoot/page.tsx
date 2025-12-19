@@ -38,6 +38,11 @@ export default function ShootPage() {
   const [address, setAddress] = useState('');
   const [notes, setNotes] = useState('');
   const [showNotes, setShowNotes] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!shoot) {
@@ -54,7 +59,7 @@ export default function ShootPage() {
     setNotes(shoot.globalNotes ?? '');
   }, [shoot, router]);
 
-  if (!shoot) {
+  if (!mounted || !shoot) {
     return null;
   }
 
