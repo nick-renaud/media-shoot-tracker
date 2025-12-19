@@ -10,19 +10,19 @@ export const TIER_INFO: Record<PropertyTier, TierInfo> = {
   standard_3_2: {
     tier: 'standard_3_2',
     displayName: '3 / 2',
-    description: 'Standard',
+    description: '323 Media',
     targetShots: 40,
   },
   standard_4_3: {
     tier: 'standard_4_3',
     displayName: '4 / 3',
-    description: 'Standard',
+    description: '323 Media',
     targetShots: 42,
   },
   standard_5_3: {
     tier: 'standard_5_3',
     displayName: '5 / 3',
-    description: 'Standard',
+    description: '323 Media',
     targetShots: 45,
   },
   deluxe_4_3: {

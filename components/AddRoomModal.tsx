@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { QUICK_ADD_ROOMS } from '@/lib/data/quick-add-rooms';
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ShootRoom } from '@/types';
 
 interface AddRoomModalProps {
-  readonly onAddRoom: (name: string, expectedShots: number) => void;
+  readonly onAddRoom: (room: Partial<ShootRoom>) => void;
 }
 
 export function AddRoomModal({ onAddRoom }: AddRoomModalProps) {
@@ -15,15 +16,25 @@ export function AddRoomModal({ onAddRoom }: AddRoomModalProps) {
   const [customName, setCustomName] = useState('');
   const [customShots, setCustomShots] = useState('');
 
-  const handleQuickAdd = (name: string, shots: number) => {
-    onAddRoom(name, shots);
+  const handleQuickAdd = (name: string, shots: number, category: ShootRoom['category'], orientation: ShootRoom['orientation']) => {
+    onAddRoom({
+      name,
+      expectedShots: shots,
+      category,
+      orientation,
+    });
     setIsOpen(false);
   };
 
   const handleCustomAdd = () => {
     const shots = Number.parseInt(customShots, 10);
     if (customName.trim() && !Number.isNaN(shots) && shots > 0) {
-      onAddRoom(customName, shots);
+      onAddRoom({
+        name: customName,
+        expectedShots: shots,
+        category: 'misc',
+        orientation: 'H',
+      });
       setCustomName('');
       setCustomShots('');
       setIsOpen(false);
@@ -84,7 +95,7 @@ export function AddRoomModal({ onAddRoom }: AddRoomModalProps) {
                     <button
                       key={room.id}
                       onClick={() =>
-                        handleQuickAdd(room.name, room.defaultShots)
+                        handleQuickAdd(room.name, room.defaultShots, room.category, room.orientation)
                       }
                       className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-left text-sm font-medium text-slate-900 transition-all hover:border-indigo-300 hover:bg-indigo-50"
                     >

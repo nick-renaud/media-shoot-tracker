@@ -73,6 +73,7 @@ export interface ShootRoom {
 
 // Quick Add Room
 export interface QuickAddRoom {
+  id: string;
   name: string;
   category: RoomCategory;
   orientation: Orientation;
