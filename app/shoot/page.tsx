@@ -80,7 +80,6 @@ export default function ShootPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-8 p-6 pb-32">
-      <ClearStorageButton />
       <div className="sticky top-0 z-10 -mx-6 bg-gradient-to-b from-white via-white to-transparent px-6 pb-6 pt-4">
         <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-4">
@@ -91,6 +90,7 @@ export default function ShootPage() {
               <h1 className="text-2xl font-bold text-slate-900">{shoot.photographer}</h1>
               <p className="text-base font-medium text-slate-500">{shoot.tierDisplayName}</p>
             </div>
+            <ClearStorageButton />
           </div>
 
           <Input
