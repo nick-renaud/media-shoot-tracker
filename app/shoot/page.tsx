@@ -11,6 +11,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { calculateTotals } from '@/lib/utils/calculate-totals';
 import { useEffect, useState } from 'react';
 import { RoomCategory as RoomCategoryType } from '@/types';
+import { DocumentTextIcon } from '@heroicons/react/24/outline';
+import { ClearStorageButton } from './clear-storage';
 
 const CATEGORY_ORDER: RoomCategoryType[] = [
   'exteriors',
@@ -78,6 +80,7 @@ export default function ShootPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-8 p-6 pb-32">
+      <ClearStorageButton />
       <div className="sticky top-0 z-10 -mx-6 bg-gradient-to-b from-white via-white to-transparent px-6 pb-6 pt-4">
         <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-4">
@@ -117,17 +120,23 @@ export default function ShootPage() {
         );
       })}
 
-      <AddRoomModal onAddRoom={addCustomRoom} />
+      {/* Add Room Section - More Prominent */}
+      <div className="rounded-2xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-white p-6 shadow-sm">
+        <AddRoomModal onAddRoom={addCustomRoom} />
+      </div>
 
       <ProgressBar totals={totals} targetShots={shoot.targetShots} />
 
-      <div className="space-y-3">
+      {/* Bottom Actions - Better Spacing */}
+      <div className="space-y-4 px-2">
         <Button
           variant="outline"
           onClick={() => setShowNotes(!showNotes)}
-          className="w-full"
+          className="w-full h-14 text-base font-semibold"
+          size="lg"
         >
-          📝 {showNotes ? 'Hide' : 'Add'} Global Notes
+          <DocumentTextIcon className="mr-2 h-6 w-6" />
+          {showNotes ? 'Hide' : 'Add'} Global Notes
         </Button>
 
         {showNotes && (
@@ -136,11 +145,15 @@ export default function ShootPage() {
             onChange={(e) => setNotes(e.target.value)}
             onBlur={() => notes && updateGlobalNotes(notes)}
             placeholder="Add notes about this shoot..."
-            className="min-h-[100px]"
+            className="min-h-[120px] text-base"
           />
         )}
 
-        <Button onClick={handleComplete} className="w-full" size="lg">
+        <Button
+          onClick={handleComplete}
+          className="w-full h-16 text-lg font-bold shadow-lg"
+          size="lg"
+        >
           Complete Shoot
         </Button>
       </div>
