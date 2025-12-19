@@ -5,22 +5,6 @@ export const ROOM_TEMPLATES: RoomTemplate[] = [
   // EXTERIORS
   // ═══════════════════════════════════════════════════════════
   {
-    id: 'entryway',
-    name: 'Entryway',
-    category: 'exteriors',
-    orientation: 'H',
-    shots: {
-      basic: 1,
-      standard_3_2: 1,
-      standard_4_3: 1,
-      standard_5_3: 1,
-      deluxe_4_3: 1,
-      deluxe_5_3: 1,
-      custom: 1,
-    },
-    conditionalDisplay: false, // Always show
-  },
-  {
     id: 'ext_front_wide',
     name: 'Exterior Front Wide',
     category: 'exteriors',
@@ -120,6 +104,22 @@ export const ROOM_TEMPLATES: RoomTemplate[] = [
   // ═══════════════════════════════════════════════════════════
   // MAIN LIVING AREA
   // ═══════════════════════════════════════════════════════════
+  {
+    id: 'entryway',
+    name: 'Entryway',
+    category: 'main_living',
+    orientation: 'H',
+    shots: {
+      basic: 1,
+      standard_3_2: 1,
+      standard_4_3: 1,
+      standard_5_3: 1,
+      deluxe_4_3: 1,
+      deluxe_5_3: 1,
+      custom: 1,
+    },
+    conditionalDisplay: false, // Always show
+  },
   {
     id: 'grand_entrance',
     name: 'Grand Entrance',
