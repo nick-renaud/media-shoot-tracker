@@ -8,7 +8,9 @@ import {
   CameraIcon,
   UserIcon,
   DocumentTextIcon,
+  EnvelopeIcon,
 } from '@heroicons/react/24/outline';
+import { useState } from 'react';
 
 interface ShootSummaryProps {
   shoot: Shoot;
@@ -22,6 +24,33 @@ export function ShootSummary({
   onStartNew,
 }: ShootSummaryProps) {
   const skippedRooms = shoot.rooms.filter((r) => r.skipped);
+  const [isSending, setIsSending] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+
+  const handleSendEmail = async () => {
+    setIsSending(true);
+    try {
+      const response = await fetch('/api/send-summary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ shoot, totals }),
+      });
+
+      if (response.ok) {
+        setEmailSent(true);
+        setTimeout(() => setEmailSent(false), 3000);
+      } else {
+        alert('Failed to send email. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send email. Please try again.');
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50/30 p-6">
@@ -146,11 +175,22 @@ export function ShootSummary({
           </div>
         )}
 
-        {/* Action button */}
+        {/* Action buttons */}
         <div
-          className="animate-in fade-in slide-in-from-bottom-4"
+          className="animate-in fade-in slide-in-from-bottom-4 space-y-3"
           style={{ animationDelay: '600ms' }}
         >
+          <Button
+            onClick={handleSendEmail}
+            disabled={isSending || emailSent}
+            variant="outline"
+            className="w-full border-2 border-indigo-200 bg-white hover:bg-indigo-50"
+            size="lg"
+          >
+            <EnvelopeIcon className="mr-2 h-5 w-5" />
+            {emailSent ? '✓ Email Sent!' : isSending ? 'Sending...' : 'Email Summary to nick@323media.io'}
+          </Button>
+
           <Button
             onClick={onStartNew}
             className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 shadow-lg transition-all hover:shadow-xl hover:from-indigo-700 hover:to-indigo-600"
