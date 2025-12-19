@@ -1,29 +1,29 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/components/ui/button';
 
 export function ClearStorageButton() {
-  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
   const handleClear = () => {
     localStorage.removeItem('current-shoot');
-    router.push('/');
-    router.refresh();
+    // Force full page reload to home page
+    window.location.href = '/';
   };
 
   return (
     <>
-      <button
+      <Button
+        variant="outline"
+        size="sm"
         onClick={() => setShowModal(true)}
-        className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-all"
-        title="Reset shoot"
+        className="gap-2"
       >
-        <ArrowPathIcon className="h-5 w-5" />
-      </button>
+        <ArrowPathIcon className="h-4 w-4" />
+        Reset
+      </Button>
 
       {showModal && (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
