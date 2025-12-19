@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/components/ui/button';
+import { useShoot } from '@/lib/hooks/useShoot';
 
 export function ClearStorageButton() {
+  const { clearShoot } = useShoot();
   const [showModal, setShowModal] = useState(false);
 
   const handleClear = () => {
-    localStorage.removeItem('current-shoot');
+    clearShoot();
     // Force full page reload to home page
     window.location.href = '/';
   };
